@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>vue demo</title>
+
+	<link rel="stylesheet" href="/utils/element-ui/index.css" />
+
+	<script src="/utils/vue.js"></script>
+	<script src="/utils/element-ui/index.js"></script>
+	<script src="/utils/axios.js"></script>
+</head>
+
+<body>
+	<div id="app">
+			{{ answer }}
+		<el-row :gutter="24">
+			<el-col :span="12" :offset="6">
+				<div class="grid-content">
+					<div style="margin-top: 15px;">
+						<el-input size="small" class="input-with-select" placeholder="请输入问题" v-model="question"
+							@keyup.enter.native="getData">
+							<el-button slot="append" icon="el-icon-search" v-on:click="getData"></el-button>
+						</el-input>
+					</div>
+				</div>
+			</el-col>
+		</el-row>
+
+		<el-row :gutter="24">
+			<el-col :span="12" :offset="6">
+				<div class="grid-content">
+					{{ answer }}
+				</div>
+			</el-col>
+		</el-row>
+	</div>
+</body>
+
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			question: '',
+			answer: '2113123',
+		},
+		methods: {
+			getData: function (event) {
+				const self = this;
+				axios({
+					method: 'post',
+					url: '/add',
+					data: {
+						a: 12,
+						b: 34,
+						question: this.question,
+					}
+				}).then(function (response) {
+					const data = response.data;
+					self.answer = data.data;
+				}).catch(function (error) {
+					self.$answer = 'Error! Could not reach the API. ' + error
+				});
+			}
+		}
+	});
+</script>
+
+</html>
