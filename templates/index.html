@@ -13,7 +13,6 @@
 
 <body>
 	<div id="app">
-			{{ answer }}
 		<el-row :gutter="24">
 			<el-col :span="12" :offset="6">
 				<div class="grid-content">
@@ -29,9 +28,7 @@
 
 		<el-row :gutter="24">
 			<el-col :span="12" :offset="6">
-				<div class="grid-content">
-					{{ answer }}
-				</div>
+				<div class="grid-content" v-text="answer"></div>
 			</el-col>
 		</el-row>
 	</div>
@@ -42,7 +39,7 @@
 		el: '#app',
 		data: {
 			question: '',
-			answer: '2113123',
+			answer: '',
 		},
 		methods: {
 			getData: function (event) {
