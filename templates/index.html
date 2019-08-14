@@ -5,6 +5,11 @@
 	<title>vue demo</title>
 
 	<link rel="stylesheet" href="/utils/element-ui/index.css" />
+	<style>
+		body {
+			font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+		}
+	</style>
 
 	<script src="/utils/vue.js"></script>
 	<script src="/utils/element-ui/index.js"></script>
@@ -12,6 +17,7 @@
 </head>
 
 <body>
+	{% raw %}
 	<div id="app">
 		<el-row :gutter="24">
 			<el-col :span="12" :offset="6">
@@ -27,11 +33,26 @@
 		</el-row>
 
 		<el-row :gutter="24">
-			<el-col :span="12" :offset="6">
-				<div class="grid-content" v-text="answer"></div>
+			<el-col :span="16" :offset="4">
+				<div class="grid-content">泛化问题列表：</div>
+			</el-col>
+			<div v-for="item in questions">
+				<el-col :span="14" :offset="5">
+					<div class="grid-content">{{item}}</div>
+				</el-col>
+			</div>
+		</el-row>
+
+		<el-row :gutter="24">
+			<el-col :span="16" :offset="4">
+				<div class="grid-content">答案：</div>
+			</el-col>
+			<el-col :span="14" :offset="5">
+				<div class="grid-content">{{answer}}</div>
 			</el-col>
 		</el-row>
 	</div>
+	{% endraw %}
 </body>
 
 <script type="text/javascript">
@@ -40,6 +61,7 @@
 		data: {
 			question: '',
 			answer: '',
+			questions: [],
 		},
 		methods: {
 			getData: function (event) {
@@ -54,9 +76,10 @@
 					}
 				}).then(function (response) {
 					const data = response.data;
-					self.answer = data.data;
+					self.answer = data.answer;
+					self.questions = data.questions;
 				}).catch(function (error) {
-					self.$answer = 'Error! Could not reach the API. ' + error
+					self.answer = 'Error! Could not reach the API. ' + error
 				});
 			}
 		}
