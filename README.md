@@ -6,6 +6,7 @@ Instructions for children
 
 ```bash
 # 安装依赖
+# pip3 install -r requirements.txt
 pip3 install Flask
 
 # 也可以启动虚拟环境，详情看 falsk 官网
