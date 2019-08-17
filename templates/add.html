@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% raw %}
+<div id="app">
+	<el-row :gutter="24">
+		<el-col :span="12" :offset="6">
+			<div class="grid-content">
+				<div style="margin-top: 15px;">
+					<el-input size="small" class="input-with-select" placeholder="请输入问题" v-model="question"
+						@keyup.enter.native="getData">
+						<el-button slot="append" icon="el-icon-search" v-on:click="getData"></el-button>
+					</el-input>
+				</div>
+			</div>
+		</el-col>
+	</el-row>
+
+	<el-row :gutter="24">
+		<el-col :span="16" :offset="4">
+			<div class="grid-content">泛化问题列表：</div>
+		</el-col>
+		<div v-for="(item, index) in questions">
+			<el-col :span="14" :offset="5">
+				<div class="grid-content">{{index}}. {{item}}</div>
+			</el-col>
+		</div>
+	</el-row>
+
+	<el-row :gutter="24">
+		<el-col :span="16" :offset="4">
+			<div class="grid-content">答案：</div>
+		</el-col>
+		<el-col :span="14" :offset="5">
+			<div class="grid-content">{{answer}}</div>
+		</el-col>
+	</el-row>
+</div>
+{% endraw %}
+{% endblock %}
+
+{% block script %}
+{% raw %}
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			question: '',
+			answer: '',
+			questions: [],
+		},
+		methods: {
+			getData: function (event) {
+				const self = this;
+				axios({
+					method: 'post',
+					url: '/add',
+					data: {
+						a: 12,
+						b: 34,
+						question: this.question,
+					}
+				}).then(function (response) {
+					const data = response.data;
+					self.answer = data.answer;
+					self.questions = data.questions;
+				}).catch(function (error) {
+					self.answer = 'Error! Could not reach the API. ' + error
+				});
+			}
+		}
+	});
+</script>
+{% endraw %}
+{% endblock %}

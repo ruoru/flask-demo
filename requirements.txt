@@ -80,3 +80,4 @@ websocket-client==0.47.0
 Werkzeug==0.12.2
 wrapt==1.10.11
 WTForms==2.1
+xlrd==1.2.0

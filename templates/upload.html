@@ -1,0 +1,57 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+{% raw %}
+<div id="app">
+	<el-row :gutter="24">
+		<el-col :span="12" :offset="2">
+			<el-link type="primary" download="upload-template.xlsx" href="/assets/upload-template.xlsx">下载模板</el-link>
+		</el-col>
+	</el-row>
+	<el-row :gutter="24">
+		<el-col :span="6" :offset="2">
+			<div class="grid-content">
+				<el-upload class="upload-demo" drag action="/upload" name="file" multiple :on-success="onUploadSuccess">
+					<i class="el-icon-upload"></i>
+					<div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+					<div class="el-upload__tip" slot="tip">只能上传xls/xlsx文件，且不超过500kb</div>
+				</el-upload>
+			</div>
+		</el-col>
+		<el-col :span="12" :offset="2">
+			<el-table :data="tableData" height="250" border stripe style="width: 100%">
+				<el-table-column prop="id" label="ID" width="180">
+				</el-table-column>
+				<el-table-column prop="name" label="姓名" width="180">
+				</el-table-column>
+				<el-table-column prop="sex" label="性别">
+				</el-table-column>
+				<el-table-column prop="age" label="年龄">
+				</el-table-column>
+			</el-table>
+		</el-col>
+	</el-row>
+
+</div>
+{% endraw %}
+{% endblock %}
+
+{% block script %}
+{% raw %}
+<script type="text/javascript">
+	new Vue({
+		el: '#app',
+		data: {
+			tableData: []
+		},
+		methods: {
+			onUploadSuccess: function (response, file, fileList) {
+
+				const data = response.data; console.log(data)
+				this.tableData = data;
+			}
+		}
+	});
+</script>
+{% endraw %}
+{% endblock %}
