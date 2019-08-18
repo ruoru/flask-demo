@@ -1,28 +1,9 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Blueprint, request, render_template, jsonify
 import json
 # import os
 import xlrd
 
-
-app = Flask(__name__, static_url_path='')
-
-
-@app.route('/', methods=['GET'])
-def home():
-    return render_template('index.html')
-
-
-@app.route('/add', methods=['GET', 'POST'])
-def add():
-    if request.method == 'GET':
-        return render_template('add.html')
-    elif request.method == 'POST':
-        j_data = json.loads(request.data)
-        return jsonify({
-            'answer': j_data['a'] + j_data['b'],
-            'questions': [j_data['question'], j_data['question']]
-        })
-
+upload = Blueprint('upload', __name__)
 
 # 限制上传的文件格式
 ALLOWED_EXTENSIONS = ['xls', 'xlsx']
@@ -39,6 +20,7 @@ def allowe_file(filename):
 #     filename = datetime.datetime.now().strftime("%Y%m%d%H%M%S") + \
 #         str(uuid.uuid4().hex)+fileinfo[-1]
 #     return filename
+# import os
 
 
 # 判断储存路径
@@ -50,8 +32,8 @@ FILE_DIR = '~/Desktop/aaaa'
 #     os.makedirs(FILE_DIR)
 
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
+@upload.route('/upload', methods=['GET', 'POST'])
+def upload_page():
     if request.method == 'GET':
         return render_template('upload.html')
     elif request.method == 'POST':
@@ -77,7 +59,3 @@ def upload():
             return jsonify({
                 'data': table_data
             })
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
