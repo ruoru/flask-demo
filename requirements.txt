@@ -14,7 +14,7 @@ cycler==0.10.0
 Cython==0.29.3
 dask==1.1.0
 decorator==4.3.0
-Django==2.2.4
+Django==2.2.24
 dlib==19.16.0
 docker==2.7.0
 docker-compose==1.19.0
